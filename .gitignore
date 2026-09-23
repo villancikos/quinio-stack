@@ -1,1 +1,8 @@
-..*
+.env
+data/
+**/acme.json
+**/*.log
+*.code-workspace
+apps/authelia/config/users.yml
+apps/authelia/config/db.sqlite3
+apps/authelia/config/notification.txt

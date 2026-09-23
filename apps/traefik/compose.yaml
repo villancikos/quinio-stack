@@ -66,7 +66,9 @@ services:
       # You can instead choose to add it to specific routers only
       # e.g. in a service's labels: (dont uncomment the line below)
       # - "traefik.http.routers.myservice.middlewares=crowdsec@docker
-
+      - "--entryPoints.websecure.transport.respondingTimeouts.readTimeout=300s"
+      - "--entryPoints.websecure.transport.respondingTimeouts.writeTimeout=300s"
+      - "--entryPoints.websecure.transport.respondingTimeouts.idleTimeout=300s"
 
       - "--certificatesresolvers.letsencrypt.acme.tlschallenge=true"
       - "--certificatesresolvers.letsencrypt.acme.email=${LETSENCRYPT_EMAIL?}"

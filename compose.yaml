@@ -107,7 +107,11 @@ include:
   - apps/wud/compose.yaml
   - apps/yamtrack/compose.yaml
   - apps/zilean/compose.yaml
-  - apps/zipline/compose.yaml
+  - apps/zipline/compose.yaml 
+  - apps/ladder/compose.yaml
+  - apps/dispatcharr/compose.yaml
+  - apps/macro-report/compose.yaml
+
   # If you would like to use wests scripts, which include blackhole and repair, uncomment the line below.
   # It is recommended you use decypharr instead, however. 
   # - apps/wests-scripts/compose.yaml

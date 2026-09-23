@@ -1,0 +1,26 @@
+services:
+  ladder:
+    image: ghcr.io/everywall/ladder:latest
+    container_name: ladder
+    restart: unless-stopped
+    expose:
+      - 8080
+    env_file:
+      - .env
+    environment:
+      - USERPASS=${LADDER_USERPASS}
+      - RULESET=https://raw.githubusercontent.com/everywall/ladder-rules/main/ruleset.yaml
+      - LOG_URLS=true
+      - FLARESOLVERR_HOST=http://flaresolverr:8191
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.ladder.rule=Host(`${LADDER_HOSTNAME?}`)"
+      - "traefik.http.routers.ladder.entrypoints=websecure"
+      - "traefik.http.routers.ladder.tls.certresolver=letsencrypt"
+      - "traefik.http.services.ladder.loadbalancer.server.port=8080"
+      - "traefik.http.routers.ladder.middlewares=ladder-slashes@docker"
+      - "traefik.http.middlewares.ladder-slashes.replacepathregex.regex=^/(https?):/(.*)"
+      - "traefik.http.middlewares.ladder-slashes.replacepathregex.replacement=/$${1}://$${2}"
+    profiles:
+      - ladder
+      - all

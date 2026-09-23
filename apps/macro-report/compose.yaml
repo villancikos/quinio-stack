@@ -1,0 +1,10 @@
+services:
+  macro-report:
+    image: python:3.12-alpine
+    profiles: ["jobs"]
+    environment:
+      - BANXICO_TOKEN=${BANXICO_TOKEN}
+      - MACRO_NOTIFY_URLS=${MACRO_NOTIFY_URLS}
+    volumes:
+      - ./report.py:/app/report.py:ro
+    command: ["python", "/app/report.py"]

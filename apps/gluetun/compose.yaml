@@ -11,6 +11,20 @@ services:
       - .env
     volumes:
       - ${DOCKER_DATA_DIR}/gluetun:/gluetun
+    expose:
+      - 9191
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dispatcharr.rule=Host(`${DISPATCHARR_HOSTNAME}`)"
+      - "traefik.http.routers.dispatcharr.entrypoints=websecure"
+      - "traefik.http.routers.dispatcharr.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.dispatcharr.middlewares=authelia@docker"
+      - "traefik.http.routers.dispatcharr-xc.rule=Host(`${DISPATCHARR_HOSTNAME}`) && (Path(`/player_api.php`) || Path(`/get.php`) || Path(`/xmltv.php`) || PathPrefix(`/live/`) || PathPrefix(`/movie/`) || PathPrefix(`/series/`) || PathPrefix(`/timeshift/`) || PathPrefix(`/proxy/`))"
+      - "traefik.http.routers.dispatcharr-xc.entrypoints=websecure"
+      - "traefik.http.routers.dispatcharr-xc.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.dispatcharr-xc.service=dispatcharr"
+      - "traefik.http.routers.dispatcharr-xc.priority=100"
+      - "traefik.http.services.dispatcharr.loadbalancer.server.port=9191"
     healthcheck:
       test: ["CMD", "/gluetun-entrypoint", "healthcheck"]
       interval: 60s
@@ -21,7 +35,6 @@ services:
       - gluetun
       - all
 
-  # Use Gost as a proxy because its better.
   gost:
     image: ginuerzh/gost
     container_name: gost
@@ -35,5 +48,3 @@ services:
     profiles:
       - gluetun
       - all
-  
-      

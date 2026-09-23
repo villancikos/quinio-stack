@@ -15,6 +15,7 @@ services:
       - "traefik.http.routers.apprise-api.rule=Host(`${APPRISE_HOSTNAME?}`)"
       - "traefik.http.routers.apprise-api.entrypoints=websecure"
       - "traefik.http.routers.apprise-api.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.apprise-api.middlewares=authelia@docker"
       - "traefik.http.services.apprise-api.loadbalancer.server.port=8000"
     volumes:
       - ${DOCKER_DATA_DIR}/apprise/config:/config

@@ -4,7 +4,7 @@ services:
     container_name: aiomanager
     restart: unless-stopped
     expose:
-      - ${PORT:-1610}
+      - 1610
     env_file:
       - .env
     volumes:
