@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(**/.env)",
+      "Read(./apps/authelia/config/users.yml)",
+      "Read(./data/**)",
+      "Bash(sudo:*)",
+      "Bash(git push --force:*)"
+    ],
+    "ask": [
+      "Bash(docker compose up:*)",
+      "Bash(docker compose down:*)",
+      "Bash(docker compose restart:*)",
+      "Bash(git push:*)"
+    ]
+  }
+}
